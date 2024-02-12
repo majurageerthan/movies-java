@@ -4,10 +4,14 @@ import com.majuran.movies.dto.MovieDto;
 import com.majuran.movies.model.Movie;
 import com.majuran.movies.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static com.majuran.movies.util.DateUtil.getLocalDate;
 
 @RequiredArgsConstructor
 @Service
@@ -17,18 +21,31 @@ public class MovieService {
 
     @Cacheable("movies")
     public List<MovieDto> getAllMovies(String startDate, String screenType) {
-        // Implement logic to filter movies based on startDate and screenType
-        // You can use the methods defined in the MovieRepository
-        return movieRepository.findAll().stream()
-                .map(MovieDto::new).toList();
+        List<Movie> movies;
+        if (startDate != null && screenType == null) {
+            movies = movieRepository.findMoviesBySlotDateAfterOrEqualTo(getLocalDate(startDate));
+        } else if (startDate == null && screenType != null) {
+            movies = movieRepository.findByScreen(screenType);
+        } else if (startDate != null) {
+            movies = movieRepository.findByScreenAndSlotListDateGreaterThanEqual(screenType, getLocalDate(startDate));
+        } else {
+            movies = movieRepository.findAll();
+        }
+        return movies.stream().map(MovieDto::new).toList();
     }
 
-    @Cacheable("movie")
-    public Movie getMovieById(Long id) {
-        return movieRepository.findById(id).orElse(null);
+    @Cacheable("movies")
+    public MovieDto getMovieById(Long id) {
+        Optional<Movie> movie = movieRepository.findById(id);
+        return movie.map(MovieDto::new).orElse(null);
     }
 
-    public void updateMovie(Long id, Movie updatedMovie) {
-        movieRepository.findById(id).ifPresent(existingMovie -> movieRepository.save(updatedMovie));
+    @CacheEvict(value = "movies", key = "#id")
+    public void updateMovie(Long id, MovieDto movieDto) {
+        movieRepository.findById(id).ifPresent(existingMovie -> {
+            existingMovie.setName(movieDto.getName());
+            existingMovie.setScreen(movieDto.getScreen());
+            movieRepository.save(existingMovie);
+        });
     }
 }

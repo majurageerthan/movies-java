@@ -13,7 +13,7 @@ public class MovieDto {
         this.id = movie.getId();
         this.name = movie.getName();
         this.screen = movie.getScreen();
-        this.slotList = movie.getBlogList().stream().map(SlotDto::new).toList();
+        this.slotList = movie.getSlotList().stream().map(SlotDto::new).toList();
     }
 
     private long id;

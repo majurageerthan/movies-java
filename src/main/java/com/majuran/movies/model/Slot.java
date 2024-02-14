@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -19,16 +18,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @Entity
 @Table(name = "movie_slot")
 public class Slot {
-    public Slot(long id, LocalDate date, String time) {
-        this.id = id;
-        this.date = date;
-        this.time = time;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

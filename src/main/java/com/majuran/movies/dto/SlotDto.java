@@ -9,13 +9,12 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class SlotDto {
+    private long id;
+    private LocalDate date;
+    private String time;
     public SlotDto(Slot slot) {
         this.id = slot.getId();
         this.date = slot.getDate();
         this.time = slot.getTime();
     }
-
-    private long id;
-    private LocalDate date;
-    private String time;
 }

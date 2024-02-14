@@ -1,7 +1,6 @@
 package com.majuran.movies.controller;
 
 import com.majuran.movies.dto.MovieDto;
-import com.majuran.movies.model.Movie;
 import com.majuran.movies.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

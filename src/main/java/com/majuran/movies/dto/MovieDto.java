@@ -9,15 +9,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class MovieDto {
+    private long id;
+    private String name;
+    private String screen;
+    private List<SlotDto> slots;
     public MovieDto(Movie movie) {
         this.id = movie.getId();
         this.name = movie.getName();
         this.screen = movie.getScreen();
-        this.slotList = movie.getSlotList().stream().map(SlotDto::new).toList();
+        this.slots = movie.getSlots().stream().map(SlotDto::new).toList();
     }
-
-    private long id;
-    private String name;
-    private String screen;
-    private List<SlotDto> slotList;
 }

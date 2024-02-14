@@ -19,28 +19,28 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    @Cacheable("movies")
+//    @Cacheable("movies")
     public List<MovieDto> getAllMovies(String startDate, String screenType) {
         List<Movie> movies;
         if (startDate != null && screenType == null) {
-            movies = movieRepository.findMoviesBySlotDateAfterOrEqualTo(getLocalDate(startDate));
+            movies = movieRepository.findMoviesWithSlotsAfterDate(getLocalDate(startDate));
         } else if (startDate == null && screenType != null) {
             movies = movieRepository.findByScreen(screenType);
         } else if (startDate != null) {
-            movies = movieRepository.findByScreenAndSlotListDateGreaterThanEqual(screenType, getLocalDate(startDate));
+            movies = movieRepository.findByScreenAndSlotsDateGreaterThanEqual(screenType, getLocalDate(startDate));
         } else {
             movies = movieRepository.findAll();
         }
         return movies.stream().map(MovieDto::new).toList();
     }
 
-    @Cacheable("movies")
+//    @Cacheable("movies")
     public MovieDto getMovieById(Long id) {
         Optional<Movie> movie = movieRepository.findById(id);
         return movie.map(MovieDto::new).orElse(null);
     }
 
-    @CacheEvict(value = "movies", key = "#id")
+//    @CacheEvict(value = "movies", key = "#id")
     public void updateMovie(Long id, MovieDto movieDto) {
         movieRepository.findById(id).ifPresent(existingMovie -> {
             existingMovie.setName(movieDto.getName());

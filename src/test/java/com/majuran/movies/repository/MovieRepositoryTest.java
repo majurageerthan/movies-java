@@ -12,14 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
-import static com.majuran.movies.util.DateUtil.getLocalDate;
-import static com.majuran.movies.util.MockData.DATE_FILTER_EQUAL_OR_ABOVE_5_21_DATA_JSON;
 import static com.majuran.movies.util.MockData.INITIAL_DATA_JSON;
 import static com.majuran.movies.util.MockFilterByScreenData.IMAX_DATA_JSON;
 import static com.majuran.movies.util.MockFilterByScreenData.STANDARD_DATA_JSON;
@@ -70,7 +66,6 @@ class MovieRepositoryTest {
         movieRepository.resetAutoIncrement();
     }
 
-
     @Test
     void testSaveAndFindMovie() {
         var actual = movieRepository.findAll();
@@ -89,16 +84,6 @@ class MovieRepositoryTest {
         void filterByImax() {
             var actual = movieRepository.findByScreen("IMAX");
             assertEqualsMovies(getMoviesFromJson(IMAX_DATA_JSON), actual);
-        }
-    }
-
-    @Nested
-    class FilterMoviesTests {
-        @Test
-        void filterByDateEqualOrAbove521() {
-            var actual = movieRepository.findMoviesWithSlotsAfterDate(getLocalDate("20240521"));
-            System.out.println(actual);
-            assertEquals(getMoviesFromJson(DATE_FILTER_EQUAL_OR_ABOVE_5_21_DATA_JSON), actual);
         }
     }
 

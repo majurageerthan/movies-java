@@ -1,7 +1,6 @@
 package com.majuran.movies.repository;
 
 import com.majuran.movies.model.Movie;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,16 +16,11 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findByScreen(String screen);
 
-    List<Movie> findBySlots_Date(LocalDate slotDate);
-
-    List<Movie> findByScreenAndSlotsDateGreaterThanEqual(String screen, LocalDate slotDate);
-
-    @Query("SELECT DISTINCT m FROM Movie m INNER JOIN m.slots s WHERE s.date >= :date")
-    List<Movie> findMoviesBySlotDateAfterOrEqualTo(LocalDate date);
-
-    //    @Query("SELECT m FROM Movie m INNER JOIN Slot s ON m.id = s.movie.id AND s.date >= :date")
-    @Query("SELECT DISTINCT m FROM Movie m JOIN FETCH m.slots s WHERE s.date > :date")
+    @Query("SELECT DISTINCT m FROM Movie m INNER JOIN FETCH m.slots s WHERE s.date >= :date")
     List<Movie> findMoviesWithSlotsAfterDate(@Param("date") LocalDate date);
+
+    @Query("SELECT DISTINCT m FROM Movie m INNER JOIN FETCH m.slots s WHERE s.date >= :date AND m.screen= :screen")
+    List<Movie> findMoviesByScreenWithSlotsAfterDate(@Param("date") LocalDate date, @Param("screen") String screen);
 
     @Modifying
     @Query(value = "ALTER TABLE movie ALTER COLUMN id RESTART WITH 1", nativeQuery = true)

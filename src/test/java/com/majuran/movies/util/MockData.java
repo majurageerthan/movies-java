@@ -167,23 +167,4 @@ public class MockData {
                 }
             ]
             """;
-
-    public static void main(String[] args) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-
-        try {
-            List<Movie> movies = objectMapper.readValue(INITIAL_DATA_JSON, new TypeReference<>() {
-            });
-
-            // Print the movies for verification
-            for (Movie movie : movies) {
-                System.out.println("Name: " + movie.getName());
-                System.out.println("Screen: " + movie.getScreen());
-                System.out.printf(movie.getSlots().toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

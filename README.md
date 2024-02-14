@@ -1,6 +1,3 @@
-
----
-
 # API Documentation
 
 This documentation provides details about the endpoints exposed by the Movie Controller in the application.

@@ -161,7 +161,7 @@ mvn test
 ```
 
 ### Access the Application:
-After the application has started, you can access it using a web browser or an API client. By default, Spring Boot applications run on port 8080. Open your web browser and navigate to http://localhost:8080 to access the application.
+After the application has started, you can access it using any API client. By default, Spring Boot applications run on port 8080. Open your API client and make a request to http://localhost:8080 with the correct URL parameters to access the API.
 
 ### Stop the Application:
 To stop the running Spring Boot application, you can press Ctrl + C in the terminal where the application is running.

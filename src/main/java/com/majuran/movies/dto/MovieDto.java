@@ -19,6 +19,7 @@ public class MovieDto {
     private String name;
     private String screen;
     private List<SlotDto> slots;
+
     public MovieDto(Movie movie) {
         this.id = movie.getId();
         this.name = movie.getName();

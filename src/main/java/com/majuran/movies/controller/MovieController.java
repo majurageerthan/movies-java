@@ -27,12 +27,12 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public MovieDto getMovieById(@PathVariable Long id) {
+    public MovieDto getMovieById(@PathVariable long id) {
         return movieService.getMovieById(id);
     }
 
     @PutMapping("/{id}")
-    public void updateMovie(@PathVariable Long id, @RequestBody MovieDto movie) {
+    public void updateMovie(@PathVariable long id, @RequestBody MovieDto movie) {
         movieService.updateMovie(id, movie);
     }
 }

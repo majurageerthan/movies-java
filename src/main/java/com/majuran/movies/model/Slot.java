@@ -17,7 +17,6 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "movie_slot")
 public class Slot {

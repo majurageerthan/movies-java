@@ -17,7 +17,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "movie")
 public class Movie {

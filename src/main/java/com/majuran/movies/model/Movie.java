@@ -30,6 +30,6 @@ public class Movie {
     @Column(name = "screen")
     private String screen;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<Slot> slotList;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<Slot> slots;
 }

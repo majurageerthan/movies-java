@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -19,7 +20,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "movie_slot")
 public class Slot {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
